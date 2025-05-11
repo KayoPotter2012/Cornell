@@ -5,216 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cadernos Cornell</title>
   <style>
-    /* Reset básico e estilo global */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: sans-serif;
-      background: #f5f5f5;
-      color: #333;
-    }
-    header {
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-    }
-    header button {
-      margin-right: 10px;
-      background: #007bff;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      color: #fff;
-      cursor: pointer;
-    }
-    header .notebooks {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    header .notebook-item {
-      display: flex;
-      align-items: center;
-      background: #eee;
-      padding: 6px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    header .notebook-item.active {
-      background: #ddd;
-    }
-    header .notebook-item span {
-      margin-right: 5px;
-    }
-    header .notebook-item button {
-      background: #e74c3c;
-      border: none;
-      padding: 4px 8px;
-      border-radius: 4px;
-      color: #fff;
-      cursor: pointer;
-    }
-    /* Container principal dividido entre sidebar e conteúdo */
-    #container {
-      display: flex;
-      height: calc(100vh - 60px);
-    }
-    /* Sidebar com lista de páginas */
-    #sidebar {
-      width: 250px;
-      background: #fff;
-      border-right: 1px solid #ddd;
-      padding: 10px;
-      overflow-y: auto;
-    }
-    #sidebar header {
-      margin-bottom: 10px;
-    }
-    #sidebar header button {
-      background: #28a745;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      color: #fff;
-      cursor: pointer;
-    }
-    #sidebar ul {
-      list-style: none;
-    }
-    #sidebar li {
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      margin-bottom: 5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-    }
-    #sidebar li.active {
-      background: #f0f0f0;
-    }
-    #sidebar li button {
-      background: #e74c3c;
-      border: none;
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: #fff;
-      cursor: pointer;
-    }
-    /* Área principal com layout Cornell */
-    #content {
-      flex: 1;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-    }
-    /* A área superior é dividida em anotações detalhadas e palavras-chave */
-    #notes-container {
-      flex: 1;
-      display: flex;
-      margin-bottom: 10px;
-      height: 75%;
-    }
-    #detailed-notes {
-      flex: 3;
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-right: 10px;
-      border-radius: 4px;
-      height: 100%;
-    }
-    #keywords {
-      flex: 1;
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 4px;
-      height: 100%;
-    }
-    /* A área inferior para resumo */
-    #summary {
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 4px;
-      min-height: 60px;
-      height: 30%;
-    }
-    
-    textarea, input[type="text"] {
-      width: 100%;
-      border: none;
-      outline: none;
-      resize: none;
-      font-family: inherit;
-      font-size: 1rem;
-      background: transparent;
-    }
-
-    #detailedText{
-      height: 100%
-    }
-
-    #keywordsText{
-      height: 100%;
-    }
-
-    #summaryText{
-      height: 100%
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; background: #f5f5f5; color: #333; }
+    header { background: #fff; border-bottom: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; }
+    header button, #formattingMenu button, #formattingMenu select { margin-right: 10px; background: #007bff; border: none; padding: 6px 12px; border-radius: 4px; color: #fff; cursor: pointer; font-size: 0.9rem; }
+    header .notebooks { display: flex; gap: 10px; flex-wrap: wrap; }
+    header .notebook-item { display: flex; align-items: center; background: #eee; padding: 6px; border-radius: 4px; cursor: pointer; }
+    header .notebook-item.active { background: #ddd; }
+    header .notebook-item span { margin-right: 5px; }
+    header .notebook-item button { background: #e74c3c; border: none; padding: 4px 8px; border-radius: 4px; color: #fff; cursor: pointer; }
+    #formattingMenu { background: #f9f9f9; border-bottom: 1px solid #ddd; padding: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    #formattingMenu input[type="color"] { width: 40px; height: 40px; padding: 0; border: none; cursor: pointer; }
+    #formattingMenu label { font-size: 0.9rem; margin-right: 5px; }
+    #container { display: flex; height: calc(100vh - 120px); }
+    #sidebar { width: 250px; background: #fff; border-right: 1px solid #ddd; padding: 10px; overflow-y: auto; }
+    #sidebar header { margin-bottom: 10px; }
+    #sidebar header button { background: #28a745; border: none; padding: 6px 12px; border-radius: 4px; color: #fff; cursor: pointer; }
+    #sidebar ul { list-style: none; }
+    #sidebar li { padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    #sidebar li.active { background: #f0f0f0; }
+    #sidebar li button { background: #e74c3c; border: none; padding: 2px 6px; border-radius: 4px; color: #fff; cursor: pointer; }
+    #content { flex: 1; padding: 20px; display: flex; flex-direction: column; background: #fff; }
+    #notes-container { flex: 1; display: flex; margin-bottom: 10px; height: 75%; }
+    #detailed-notes, #keywords { border: 1px solid #ddd; padding: 10px; border-radius: 4px; height: 100%; overflow: auto; }
+    #detailed-notes { flex: 4; margin-right: 10px; }
+    #keywords { flex: 0.8; }
+    #summary { border: 1px solid #ddd; padding: 10px; border-radius: 4px; min-height: 60px; height: 30%; overflow: auto; }
+    [contenteditable] { width: 100%; height: 100%; outline: none; font-family: inherit; font-size: 1rem; }
   </style>
 </head>
 <body>
-
-  <!-- Menu Superior: Lista de Cadernos -->
   <header>
     <button id="addNotebook">Novo Caderno</button>
-    <div class="notebooks" id="notebooksList">
-      <!-- Os cadernos serão inseridos dinamicamente -->
-    </div>
+    <div class="notebooks" id="notebooksList"></div>
   </header>
 
+  <div id="formattingMenu">
+    <button onclick="document.execCommand('bold')">Negrito</button>
+    <button onclick="document.execCommand('italic')">Itálico</button>
+    <label for="fontColor">Cor da fonte</label>
+    <input id="fontColor" type="color" title="Cor da fonte" onchange="changeFontColor(this.value)">
+    <label for="highlightColor">Marca-texto</label>
+    <input id="highlightColor" type="color" title="Marca-texto" onchange="changeHighlight(this.value)">
+    <label for="fontSize">Tamanho</label>
+    <select id="fontSize" onchange="changeFontSize(this.value)">
+      <option value="1">10px</option>
+      <option value="2">13px</option>
+      <option value="3">16px</option>
+      <option value="4">18px</option>
+      <option value="5">20px</option>
+      <option value="6">24px</option>
+      <option value="7">28px</option>
+    </select>
+  </div>
+
   <div id="container">
-    <!-- Sidebar: Páginas do caderno selecionado -->
     <div id="sidebar">
       <header>
         <button id="addPage">Nova Página</button>
       </header>
-      <ul id="pagesList">
-        <!-- As páginas serão inseridas dinamicamente -->
-      </ul>
+      <ul id="pagesList"></ul>
     </div>
-    <!-- Conteúdo: Layout Cornell para anotações -->
     <div id="content">
       <div id="notes-container">
-        <!-- Área para anotações detalhadas -->
-        <div id="detailed-notes">
-          <textarea id="detailedText" placeholder="Anotações detalhadas..."></textarea>
-        </div>
-        <!-- Área para palavras-chave -->
-        <div id="keywords">
-          <textarea id="keywordsText" placeholder="Palavras-chave..."></textarea>
-        </div>
+        <div id="detailed-notes" contenteditable="true" placeholder="Anotações detalhadas..."></div>
+        <div id="keywords" contenteditable="true" placeholder="Palavras-chave..."></div>
       </div>
-      <!-- Área para resumo -->
-      <div id="summary">
-        <textarea id="summaryText" placeholder="Resumo..."></textarea>
-      </div>
+      <div id="summary" contenteditable="true" placeholder="Resumo..."></div>
     </div>
   </div>
 
   <script>
-    // Estrutura de dados: array de cadernos com páginas
     let notebooks = [];
     let selectedNotebookId = null;
     let selectedPageId = null;
 
-    // Carrega dados do localStorage, se existirem
     function loadData() {
       const data = localStorage.getItem('notesData');
       if (data) {
@@ -229,34 +94,26 @@
       }
     }
 
-    // Salva os dados no localStorage
     function saveData() {
-      const data = {
-        notebooks,
-        selectedNotebookId,
-        selectedPageId
-      };
+      const data = { notebooks, selectedNotebookId, selectedPageId };
       localStorage.setItem('notesData', JSON.stringify(data));
     }
 
-    // Gera um id único simples
     function generateId() {
       return '_' + Math.random().toString(36).substr(2, 9);
     }
 
-    // Renderiza os cadernos no menu superior
     function renderNotebooks() {
       const notebooksList = document.getElementById('notebooksList');
       notebooksList.innerHTML = '';
       notebooks.forEach(nb => {
         const nbDiv = document.createElement('div');
         nbDiv.className = 'notebook-item' + (nb.id === selectedNotebookId ? ' active' : '');
-        
+
         const nbSpan = document.createElement('span');
         nbSpan.textContent = nb.name;
         nbSpan.addEventListener('click', () => {
           selectedNotebookId = nb.id;
-          // Verifica se a página atualmente selecionada pertence a este caderno
           if (!nb.pages.find(p => p.id === selectedPageId)) {
             selectedPageId = nb.pages.length > 0 ? nb.pages[0].id : null;
           }
@@ -266,8 +123,7 @@
           saveData();
         });
         nbDiv.appendChild(nbSpan);
-        
-        // Botão para deletar caderno
+
         const delBtn = document.createElement('button');
         delBtn.textContent = 'X';
         delBtn.addEventListener('click', (e) => {
@@ -289,7 +145,6 @@
       });
     }
 
-    // Renderiza as páginas no sidebar do caderno selecionado
     function renderPages() {
       const pagesList = document.getElementById('pagesList');
       pagesList.innerHTML = '';
@@ -305,8 +160,7 @@
             saveData();
           });
           li.textContent = page.title;
-          
-          // Botão para deletar página
+
           const delBtn = document.createElement('button');
           delBtn.textContent = 'X';
           delBtn.addEventListener('click', (e) => {
@@ -327,61 +181,79 @@
       }
     }
 
-    // Renderiza o conteúdo das áreas de anotações da página selecionada
     function renderContent() {
-      const detailedText = document.getElementById('detailedText');
-      const keywordsText = document.getElementById('keywordsText');
-      const summaryText = document.getElementById('summaryText');
-
       const notebook = notebooks.find(n => n.id === selectedNotebookId);
-      if(notebook) {
+      const detailed = document.getElementById('detailed-notes');
+      const keywords = document.getElementById('keywords');
+      const summary = document.getElementById('summary');
+
+      if (notebook) {
         const page = notebook.pages.find(p => p.id === selectedPageId);
-        if(page) {
-          detailedText.value = page.note;
-          keywordsText.value = page.keywords;
-          summaryText.value = page.summary;
+        if (page) {
+          detailed.innerHTML = page.note;
+          keywords.innerHTML = page.keywords;
+          summary.innerHTML = page.summary;
         } else {
-          detailedText.value = "";
-          keywordsText.value = "";
-          summaryText.value = "";
+          detailed.innerHTML = '';
+          keywords.innerHTML = '';
+          summary.innerHTML = '';
         }
-      } else {
-        detailedText.value = "";
-        keywordsText.value = "";
-        summaryText.value = "";
       }
     }
 
-    // Atualiza os dados da página conforme o usuário digita e salva automaticamente
     function updateCurrentPage(field, value) {
       const notebook = notebooks.find(n => n.id === selectedNotebookId);
-      if(notebook) {
+      if (notebook) {
         const page = notebook.pages.find(p => p.id === selectedPageId);
-        if(page) {
+        if (page) {
           page[field] = value;
           saveData();
         }
       }
     }
-    document.getElementById('detailedText').addEventListener('input', function() {
-      updateCurrentPage('note', this.value);
+
+    // Função para lidar com o evento de colar a imagem
+    function handlePaste(event) {
+      const clipboardItems = event.clipboardData.items;
+      for (let i = 0; i < clipboardItems.length; i++) {
+        const item = clipboardItems[i];
+        if (item.type.indexOf('image') === 0) {
+          const file = item.getAsFile();
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const img = new Image();
+            img.src = e.target.result;
+
+            // Coloca a imagem onde o foco está
+            const focusedElement = document.activeElement;
+            if (focusedElement && focusedElement.isContentEditable) {
+              focusedElement.appendChild(img);
+              updateCurrentPage(focusedElement.id, focusedElement.innerHTML);
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+
+    // Adiciona evento de "paste" para as áreas de anotação e resumo
+    document.getElementById('detailed-notes').addEventListener('paste', handlePaste);
+    document.getElementById('summary').addEventListener('paste', handlePaste);
+
+    document.getElementById('detailed-notes').addEventListener('input', function() {
+      updateCurrentPage('note', this.innerHTML);
     });
-    document.getElementById('keywordsText').addEventListener('input', function() {
-      updateCurrentPage('keywords', this.value);
+    document.getElementById('keywords').addEventListener('input', function() {
+      updateCurrentPage('keywords', this.innerHTML);
     });
-    document.getElementById('summaryText').addEventListener('input', function() {
-      updateCurrentPage('summary', this.value);
+    document.getElementById('summary').addEventListener('input', function() {
+      updateCurrentPage('summary', this.innerHTML);
     });
 
-    // Evento para criar novo caderno
     document.getElementById('addNotebook').addEventListener('click', () => {
       const name = prompt("Digite o nome do caderno:");
-      if(name) {
-        const newNotebook = {
-          id: generateId(),
-          name,
-          pages: []
-        };
+      if (name) {
+        const newNotebook = { id: generateId(), name, pages: [] };
         notebooks.push(newNotebook);
         selectedNotebookId = newNotebook.id;
         selectedPageId = null;
@@ -392,22 +264,15 @@
       }
     });
 
-    // Evento para criar nova página no caderno selecionado
     document.getElementById('addPage').addEventListener('click', () => {
       const notebook = notebooks.find(n => n.id === selectedNotebookId);
-      if(!notebook) {
+      if (!notebook) {
         alert("Selecione ou crie um caderno primeiro.");
         return;
       }
       const title = prompt("Digite o título da página:");
-      if(title) {
-        const newPage = {
-          id: generateId(),
-          title,
-          note: "",
-          keywords: "",
-          summary: ""
-        };
+      if (title) {
+        const newPage = { id: generateId(), title, note: "", keywords: "", summary: "" };
         notebook.pages.push(newPage);
         selectedPageId = newPage.id;
         renderPages();
@@ -416,23 +281,20 @@
       }
     });
 
-    // Inicialização: carrega dados ou cria um caderno e página padrão
+    function changeFontColor(color) {
+      document.execCommand('foreColor', false, color);
+    }
+
+    function changeHighlight(color) {
+      document.execCommand('hiliteColor', false, color);
+    }
+
     loadData();
-    if(notebooks.length === 0) {
-      const newNotebook = {
-        id: generateId(),
-        name: "Caderno 1",
-        pages: []
-      };
+    if (notebooks.length === 0) {
+      const newNotebook = { id: generateId(), name: "Caderno 1", pages: [] };
       notebooks.push(newNotebook);
       selectedNotebookId = newNotebook.id;
-      const newPage = {
-        id: generateId(),
-        title: "Página 1",
-        note: "",
-        keywords: "",
-        summary: ""
-      };
+      const newPage = { id: generateId(), title: "Página 1", note: "", keywords: "", summary: "" };
       newNotebook.pages.push(newPage);
       selectedPageId = newPage.id;
       saveData();
@@ -440,7 +302,18 @@
     renderNotebooks();
     renderPages();
     renderContent();
-  </script>
 
+    function changeFontColor(color) {
+      document.execCommand('foreColor', false, color);
+    }
+
+    function changeHighlight(color) {
+      document.execCommand('hiliteColor', false, color);
+    }
+
+    function changeFontSize(sizeValue) {
+      document.execCommand('fontSize', false, sizeValue);
+    }
+  </script>
 </body>
 </html>
